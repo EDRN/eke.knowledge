@@ -1,0 +1,50 @@
+<html xmlns='http://www.w3.org/1999/xhtml'
+    xml:lang='en'
+    lang='en'
+    xmlns:tal='http://xml.zope.org/namespaces/tal'
+    xmlns:metal='http://xml.zope.org/namespaces/metal'
+    xmlns:i18n='http://xml.zope.org/namespaces/i18n'
+    metal:use-macro='context/main_template/macros/master'
+    i18n:domain='eke.knowledge'>
+    <head>
+        <title>Knowledge Folder</title>
+    </head>
+    <body>
+        <metal:main fill-slot='main'>
+            <tal:main-macro metal:define-macro='main' tal:define='results view/results'>
+                <div tal:replace='structure provider:plone.abovecontenttitle' />
+                <h1 class='documentFirstHeading' i18n:translate='ingestResults_title'>
+                    Ingest Results
+                </h1>
+                <div tal:replace='structure provider:plone.belowcontenttitle' />
+                <div tal:replace='structure provider:plone.abovecontentbody' />
+                <p tal:condition='not:results/numObjectsCreated' i18n:translate='ingestResults_noResults'>
+                    No items could be ingested from the RDF data source.
+                </p>
+				<dl tal:condition='results/numWarnings' class='portalMessage warning'>
+					<dt i18n:translate='ingestResults_warnings'>Warning</dt>
+					<dd i18n:translate='ingestResults_warningsIntro'>
+						Notice! Some unusual things transpired during ingestion. Please look over the 
+						following list of warning messages to see if something serious has befallen:
+						<ul tal:define='warnings results/warnings'>
+							<li tal:repeat='warning warnings' tal:content='warning'>
+								Erection of upright structure underwent dysfunctional state.
+							</li>
+						</ul>
+					</dd>
+				</dl>
+                <div tal:condition='results/numObjectsCreated'>
+                    <p i18n:translate='ingestResults_resultsHeader'>The following items have been created:</p>
+                    <ul tal:define='objects results/createdObjects'>
+                        <li tal:repeat='obj objects'>
+                            <a href='#' tal:attributes='href obj/url' tal:content='obj/title'>
+                                Title of Some Object
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div tal:replace='structure provider:plone.belowcontentbody' />
+            </tal:main-macro>
+        </metal:main>
+    </body>
+</html>

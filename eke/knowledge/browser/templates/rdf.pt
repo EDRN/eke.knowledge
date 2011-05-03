@@ -1,0 +1,6 @@
+<div metal:define-macro='rdfDataSource' tal:define='isManager python:checkPermission("Manage portal", context);'>
+    <div tal:condition='isManager'>
+        <label for='parent-fieldname-rdfDataSource' i18n:translate='label_rdfDataSource'>RDF Data Source:</label>
+        <metal:field use-macro='python:context.widget("rdfDataSource", mode="view")'>http://rdf.com/rdf</metal:field>
+    </div>
+</div>

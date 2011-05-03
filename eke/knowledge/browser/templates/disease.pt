@@ -1,0 +1,58 @@
+<html xmlns='http://www.w3.org/1999/xhtml'
+    xml:lang='en'
+    lang='en'
+    xmlns:tal='http://xml.zope.org/namespaces/tal'
+    xmlns:metal='http://xml.zope.org/namespaces/metal'
+    xmlns:i18n='http://xml.zope.org/namespaces/i18n'
+    metal:use-macro='context/main_template/macros/master'
+    i18n:domain='eke.knowledge'>
+    <head>
+        <title>Disease</title>
+    </head>
+    <body>
+        <metal:main fill-slot='main'>
+            <tal:main-macro metal:define-macro='main'>
+                <div tal:replace='structure provider:plone.abovecontenttitle' />
+                <h1 class='documentFirstHeading'> 
+                    <metal:field use-macro='python:context.widget("title", mode="view")'>
+                        Title
+                    </metal:field>
+                </h1>
+                <div tal:replace='structure provider:plone.belowcontenttitle' />
+                <p class='documentDescription'>
+                    <metal:field use-macro='python:context.widget("description", mode="view")'>Description.</metal:field>
+                </p>
+                <div tal:replace='structure provider:plone.abovecontentbody' />
+                <div>
+                    <label for='parent-fieldname-icd9Code' i18n:translate='label_icd9Code'>ICD9 Code:</label>
+                    <metal:field use-macro='python:context.widget("icd9Code", mode="view")'>509.2</metal:field>
+                </div>
+                <div>
+                    <label for='parent-fieldname-icd10Code' i18n:translate='label_icd10Code'>ICD10 Code:</label>
+                    <metal:field use-macro='python:context.widget("icd10Code", mode="view")'>C35-V12</metal:field>
+                </div>
+                <div tal:define='organs view/affectedOrgans'>
+                    <label for='parent-fieldname-affectedOrgans' i18n:translate='label_affectedOrgans'
+                        tal:attributes='for python:(len(organs) &gt; 0) and "parent-fieldname-affectedOrgans" or None'>
+                        Affected Body Systems:
+                    </label>
+                    <p class='discreet' i18n:translate='disease_noOrgans' tal:condition='not:organs'>
+                        This disease does not affect any body systems.
+                    </p>
+                    <ul id='parent-fieldname-affectedOrgans' tal:condition='organs'>
+                        <li tal:repeat='organ organs'>
+                            <a href='#' title='The human Anus is the external opening of the rectum.'
+                                tal:attributes='href organ/url; title organ/description;' tal:content='organ/title'>
+                                Anus
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div metal:use-macro='context/document_relateditems/macros/relatedItems'>
+                    Any related items
+                </div>
+                <div tal:replace='structure provider:plone.belowcontentbody' />
+            </tal:main-macro>
+        </metal:main>
+    </body>
+</html>

@@ -1,0 +1,43 @@
+Changelog
+=========
+
+What follows is a history of changes from release to release.
+
+
+1.0.0 - Plone 4
+---------------
+
+This release makes eke.knowledge compatible with Plone 4.
+
+
+0.0.3 - Markup Toggling
+-----------------------
+
+This release addresses the only issue below:
+
+* CA-733 - Ingest of science data should treat custodian field as plain text,
+  not marked up HTML
+
+
+0.0.2 - Defensive Ingest
+------------------------
+
+This releases addresses the following issue:
+
+* https://oodt.jpl.nasa.gov/jira/browse/CA-571 - Make RDF ingest defensive
+  against inconsistent data
+
+
+0.0.1 - HTML Escaping
+---------------------
+
+The sole issue addressed in this release is the following:
+
+* http://oodt.jpl.nasa.gov/jira/browse/CA-472 - Protocols and other items seem
+  to still have encoded ASCII characters in the titles
+
+
+0.0.0 - Unreleased
+------------------
+
+Initial release into beta.

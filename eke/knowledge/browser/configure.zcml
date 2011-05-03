@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+Copyright 2009 California Institute of Technology. ALL RIGHTS
+RESERVED. U.S. Government Sponsorship acknowledged.
+-->
+<configure xmlns='http://namespaces.zope.org'
+    xmlns:browser='http://namespaces.zope.org/browser'
+    i18n_domain='eke.knowledge'>
+    <include package='plone.app.contentmenu'/>
+
+    <!-- Macro for common RDF field -->
+    <browser:page
+        for='*'
+        permission='zope2.Public'
+        name='standardRDFAttribute'
+        template='templates/rdf.pt'
+    />
+
+    <!-- Knowledge Folder -->
+    <browser:resource name='knowledge-folder.gif' file='images/knowledge-folder.gif'/>
+    <browser:page
+        class='.views.KnowledgeFolderView'
+        for='..interfaces.IKnowledgeFolder'
+        name='view'
+        permission='zope2.View'
+    />
+    <browser:page
+        class='.rdf.KnowledgeFolderIngestor'
+        for='..interfaces.IKnowledgeFolder'
+        name='ingest'
+        permission='cmf.ManagePortal'
+    />
+    <browser:menuItem
+        action='@@view'
+        description='Default representation of a Knowledge Folder.'
+        for='..interfaces.IKnowledgeFolder'
+        menu='plone_displayviews'
+        title='Knowledge Folder view'
+    />
+
+    <!-- Knowledge Object -->
+    <browser:resource name='knowledge-object.gif' file='images/knowledge-object.gif'/>
+    <browser:page
+        class='.views.KnowledgeObjectView'
+        for='..interfaces.IKnowledgeObject'
+        name='view'
+        permission='zope2.View'
+    />
+    <browser:menuItem
+        action='@@view'
+        description='Default representation of a Knowledge Object.'
+        for='..interfaces.IKnowledgeObject'
+        menu='plone_displayviews'
+        title='Knowledge Object view'
+    />
+    
+    <!-- Body System -->
+    <browser:resource name='body-system.gif' file='images/body-system.gif'/>
+    <browser:page
+        class='.views.BodySystemView'
+        for='..interfaces.IBodySystem'
+        name='view'
+        permission='zope2.View'
+    />
+    <browser:menuItem
+        action='@@view'
+        description='Default representation of a Body System.'
+        for='..interfaces.IBodySystem'
+        menu='plone_displayviews'
+        title='Body System view'
+    />
+    
+    <!-- Disease -->
+    <browser:resource name='disease.gif' file='images/disease.gif'/>
+    <browser:page
+        class='.views.DiseaseView'
+        for='..interfaces.IDisease'
+        name='view'
+        permission='zope2.View'
+    />
+    <browser:menuItem
+        action='@@view'
+        description='Default representation of a Disease.'
+        for='..interfaces.IDisease'
+        menu='plone_displayviews'
+        title='Disease view'
+    />
+    
+    
+</configure>
