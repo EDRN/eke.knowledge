@@ -3,6 +3,18 @@ Changelog
 
 What follows is a history of changes from release to release.
 
+1.0.1 - Date Dumbening
+----------------------
+
+It used to be you could call an Archetypes's DateTimeField mutator method with
+a string like::
+
+    '2011-05-04T13:29:26.311Z'
+
+However, the alleged "fix" to http://dev.plone.org/plone/ticket/10141 broke
+that.  This release works around that problem by chopping off milliseconds
+(and UTC "zulu" indicator) before passing the string onto the mutator.
+
 
 1.0.0 - Plone 4
 ---------------

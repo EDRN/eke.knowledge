@@ -111,6 +111,9 @@ def updateObject(obj, uri, predicates, context=None):
                             # Work around "fix" to http://dev.plone.org/plone/ticket/10141
                             if f.getType() == 'Products.Archetypes.Field.DateTimeField':
                                 value = value.replace('T', ' ')
+                                # And dumb it down even more (ECAS gives nice full times with milliseconds, Archetypes chokes)
+                                if value.endswith('Z') and value[-5] == '.':
+                                    value = value[:-5]
                             mutator(value)
 
 def getUIDsFromURIs(context, uris):
