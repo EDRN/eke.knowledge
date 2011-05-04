@@ -107,7 +107,11 @@ def updateObject(obj, uri, predicates, context=None):
                         else:
                             # Otherwise, we consider it HTML, and all we have to do is convert any entities,
                             # leaving the markup in place.
-                            mutator(convertEntities(value))
+                            value = convertEntities(value)
+                            # Work around "fix" to http://dev.plone.org/plone/ticket/10141
+                            if f.getType() == 'Products.Archetypes.Field.DateTimeField':
+                                value = value.replace('T', ' ')
+                            mutator(value)
 
 def getUIDsFromURIs(context, uris):
     '''Return a list of object UIDs that correspond to the URI identifiers
