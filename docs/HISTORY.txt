@@ -3,6 +3,14 @@ Changelog
 
 What follows is a history of changes from release to release.
 
+
+1.0.2 - Upgrade Cleanup
+-----------------------
+
+This release updates the GenericSetup profile to 4, and provides upgrade steps
+to that profile.
+
+
 1.0.1 - Date Dumbening
 ----------------------
 
