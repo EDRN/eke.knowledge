@@ -20,6 +20,9 @@ _namespaces  = ['eke']
 _entryPoints = {}
 _zipSafe     = False
 _keywords    = 'web zope plone edrn cancer biomarkers eke knowledge'
+_extras = {
+    'test': ['plone.app.testing'],
+}
 _requirements = [
     'setuptools',
     'rdflib < 2.5.0',
@@ -57,6 +60,7 @@ setup(
     description=_description,
     download_url=_downloadURL,
     entry_points=_entryPoints,
+    extras_require=_extras,
     include_package_data=True,
     install_requires=_requirements,
     keywords=_keywords,
