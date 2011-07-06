@@ -19,7 +19,7 @@ class EKEKnowledge(PloneSandboxLayer):
         eke.knowledge.tests.base.registerLocalTestData()
     def setUpPloneSite(self, portal):
         self.applyProfile(portal, 'eke.knowledge:default')
-    def teatDownZope(self, app):
+    def tearDownZope(self, app):
         z2.uninstallProduct(app, 'eke.knowledge')
         urllib2.install_opener(urllib2.build_opener())
     
