@@ -1,32 +1,11 @@
 # encoding: utf-8
-# Copyright 2008 California Institute of Technology. ALL RIGHTS
+# Copyright 2008-2012 California Institute of Technology. ALL RIGHTS
 # RESERVED. U.S. Government Sponsorship acknowledged.
 
-'''
-Testing base code.
+'''Testing base code.
 '''
 
-from Products.Five import zcml
-from Products.Five import fiveconfigure
-from Testing import ZopeTestCase as ztc
-from Products.PloneTestCase import PloneTestCase as ptc
-from Products.PloneTestCase.layer import onsetup
 import urllib2, cStringIO
-
-# Traditional Products we have to load manually for test cases:
-# (none at this time)
-
-@onsetup
-def setupEKEKnowledge():
-    '''Set up additional products required.'''
-    fiveconfigure.debug_mode = True
-    import eke.knowledge
-    zcml.load_config('configure.zcml', eke.knowledge)
-    fiveconfigure.debug_mode = False
-    ztc.installPackage('eke.knowledge')
-
-setupEKEKnowledge()
-ptc.setupPloneSite(products=['eke.knowledge'])
 
 _oneResource = '''<?xml version='1.0' encoding='utf-8'?><rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:bmdb='http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#'><bmdb:ExternalResource rdf:about='http://google.com/'><bmdb:URI>http://google.com/</bmdb:URI><bmdb:Description>A search engine</bmdb:Description></bmdb:ExternalResource></rdf:RDF>'''
 _twoResources = '''<?xml version='1.0' encoding='utf-8'?><rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:bmdb='http://edrn.nci.nih.gov/rdf/rdfs/bmdb-1.0.0#'><bmdb:ExternalResource rdf:about='http://google.com/'><bmdb:URI>http://google.com/</bmdb:URI><bmdb:Description>A search engine</bmdb:Description></bmdb:ExternalResource><bmdb:ExternalResource rdf:about='http://yahoo.com/'><bmdb:URI>http://yahoo.com/</bmdb:URI><bmdb:Description>A web index</bmdb:Description></bmdb:ExternalResource></rdf:RDF>'''
@@ -72,27 +51,13 @@ def registerLocalTestData():
     registerTestData('/diseases/c', _markedUpDisease)
     registerTestData('/resources/similar', _similarResources)
 
-class _TestHandler(urllib2.BaseHandler):
+class TestHandler(urllib2.BaseHandler):
     '''Fake web server that serves up test data for unit and functional tests.'''
     def testscheme_open(self, req):
         try:
             return cStringIO.StringIO(_testData[req.get_selector()])
         except KeyError:
             raise urllib2.URLError('Not found')
-
-class BaseTestCase(ptc.PloneTestCase):
-    '''Base for tests in this package.'''
-    def setUp(self):
-        super(BaseTestCase, self).setUp()
-        urllib2.install_opener(urllib2.build_opener(_TestHandler))
-        registerLocalTestData()
-    
-class FunctionalBaseTestCase(ptc.FunctionalTestCase):
-    '''Base class for functional (doc-)tests.'''
-    def setUp(self):
-        super(FunctionalBaseTestCase, self).setUp()
-        urllib2.install_opener(urllib2.build_opener(_TestHandler))
-        registerLocalTestData()
 
 def registerTestData(urlSelector, rdfResponse):
     '''Add additional test data for a given base URL selector to respond with given RDF.'''

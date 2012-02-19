@@ -5,7 +5,7 @@
 from plone.app.testing import PloneSandboxLayer, PLONE_FIXTURE, IntegrationTesting, FunctionalTesting
 from plone.app.testing import TEST_USER_ID, TEST_USER_NAME
 from plone.testing import z2
-from eke.knowledge.tests.base import _TestHandler
+from eke.knowledge.tests.base import TestHandler
 import urllib2
 
 class EKEKnowledge(PloneSandboxLayer):
@@ -14,7 +14,7 @@ class EKEKnowledge(PloneSandboxLayer):
         import eke.knowledge
         self.loadZCML(package=eke.knowledge)
         z2.installProduct(app, 'eke.knowledge')
-        urllib2.install_opener(urllib2.build_opener(_TestHandler))
+        urllib2.install_opener(urllib2.build_opener(TestHandler))
         import eke.knowledge.tests.base
         eke.knowledge.tests.base.registerLocalTestData()
     def setUpPloneSite(self, portal):

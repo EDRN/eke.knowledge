@@ -1,19 +1,21 @@
 # encoding: utf-8
-# Copyright 2010 California Institute of Technology. ALL RIGHTS
+# Copyright 2010-2012 California Institute of Technology. ALL RIGHTS
 # RESERVED. U.S. Government Sponsorship acknowledged.
 
 '''EDRN Knowledge Environment: Filter Tests
 '''
 
-import unittest
-from base import BaseTestCase
+import unittest2 as unittest
+from eke.knowledge.testing import EKE_KNOWLEDGE_INTEGRATION_TESTING
 from eke.knowledge.browser.utils import EntityFilterer, MarkupFilterer
 
-class FiltererTestCase(BaseTestCase):
+class FiltererTestCase(unittest.TestCase):
     '''Common base for tests of filterers'''
+    layer = EKE_KNOWLEDGE_INTEGRATION_TESTING
     def setUp(self):
         super(FiltererTestCase, self).setUp()
         self.filterer = self._constructFilterer()
+        self.portal = self.layer['portal']
     def _constructFilterer(self):
         raise NotImplementedError('Subclasses must implement')
     def testEmptyInput(self):
@@ -37,12 +39,12 @@ class FiltererTestCase(BaseTestCase):
         self.filterer.feed(u'&amp;&eacute;&mdash;&copy;')
         self.assertEquals(u'&é—©', self.filterer.getResult())
 
-class TestEntityFilterer(FiltererTestCase):
+class EntityFiltererTest(FiltererTestCase):
     '''Unit tests for the EntityFilterer'''
     def _constructFilterer(self):
         return EntityFilterer()
 
-class TestMarkupFilterer(FiltererTestCase):
+class MarkupFiltererTest(FiltererTestCase):
     '''Unit tests for the MarkupFilterer'''
     def _constructFilterer(self):
         return MarkupFilterer()
@@ -56,8 +58,12 @@ class TestMarkupFilterer(FiltererTestCase):
         self.assertEquals(u'Süperscripts—and—emphasized subscripts', self.filterer.getResult())
 
 def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestEntityFilterer))
-    suite.addTest(unittest.makeSuite(TestMarkupFilterer))
-    return suite
+    return unittest.TestSuite([
+        unittest.makeSuite(EntityFiltererTest),
+        unittest.makeSuite(MarkupFiltererTest)
+    ])
+
+if __name__ == '__main__':
+    unittest.main(defaultTest='test_suite')
+
     

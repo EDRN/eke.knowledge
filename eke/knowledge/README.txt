@@ -33,36 +33,23 @@ using a series of functional tests.
 Tests
 =====
 
-In order to execute these tests, we'll first need a test browser::
+First we have to set up some things and login to the site::
 
-    >>> from Products.Five.testbrowser import Browser
-    >>> browser = Browser()
-    >>> portalURL = self.portal.absolute_url()
-        
-We also change some settings so that any errors will be reported immediately::
-
+    >>> app = layer['app']
+    >>> from plone.testing.z2 import Browser
+    >>> from plone.app.testing import SITE_OWNER_NAME, SITE_OWNER_PASSWORD
+    >>> browser = Browser(app)
     >>> browser.handleErrors = False
-    >>> self.portal.error_log._ignored_exceptions = ()
-        
-We'll also turn off the portlets.  Why?  Well for these tests we'll be looking
-for specific strings output in the HTML, and the portlets will often have
-duplicate links that could interfere with that::
+    >>> browser.addHeader('Authorization', 'Basic %s:%s' % (SITE_OWNER_NAME, SITE_OWNER_PASSWORD))
+    >>> portal = layer['portal']    
+    >>> portalURL = portal.absolute_url()
 
-    >>> from zope.component import getUtility, getMultiAdapter
-    >>> from plone.portlets.interfaces import IPortletManager, IPortletAssignmentMapping
-    >>> for colName in ('left', 'right'):
-    ...     col = getUtility(IPortletManager, name=u'plone.%scolumn' % colName)
-    ...     assignable = getMultiAdapter((self.portal, col), IPortletAssignmentMapping)
-    ...     for name in assignable.keys():
-    ...             del assignable[name]
+We'll also have a second browser that's unprivileged for some later
+demonstrations::
 
-And finally we'll log in as an administrator::
+    >>> unprivilegedBrowser = Browser(app)
 
-    >>> from Products.PloneTestCase.setup import portal_owner, default_password
-    >>> browser.open(portalURL + '/login_form?came_from=' + portalURL)
-    >>> browser.getControl(name='__ac_name').value = portal_owner
-    >>> browser.getControl(name='__ac_password').value = default_password
-    >>> browser.getControl(name='submit').click()
+Now, let's check things out.
 
 
 Addable Content
@@ -235,6 +222,7 @@ This package provides two vocabulary factories, one for available body
 systems, and one for diseases.  Let's see if they produce reasonable values::
 
     >>> from zope.schema.interfaces import IVocabularyFactory
+    >>> from zope.component import getUtility
     >>> v = getUtility(IVocabularyFactory, name='eke.knowledge.BodySystems')
     >>> type(v(portal))
     <class 'zope.schema.vocabulary.SimpleVocabulary'>
@@ -444,13 +432,11 @@ The URL to an RDF data source is nominally displayed on a knowledge folder::
 
 That shows up because we're logged in as an administrator.  Mere mortals
 shouldn't see that.  For one, it could confuse their tiny minds.  Secondly,
-even if they did understand it, they could care less.  Let's log out and
-pretend we're a mere mortal.  The RDF data source should disappear from the
-view::
+even if they did understand it, they could care less.  Let's see if the RDF
+data source disappears for mere mortals::
 
-    >>> browser.open(portalURL + '/logout')
-    >>> browser.open(portalURL + '/serious-business')
-    >>> 'RDF Data Source' not in browser.contents
+    >>> unprivilegedBrowser.open(portalURL + '/serious-business')
+    >>> 'RDF Data Source' not in unprivilegedBrowser.contents
     True
 
 That's it!

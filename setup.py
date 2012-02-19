@@ -26,7 +26,7 @@ _extras = {
 _requirements = [
     'setuptools',
     'rdflib < 2.5.0',
-    'Plone',
+    'Products.CMFPlone',
 ]
 _classifiers = [
     'Development Status :: 4 - Beta',

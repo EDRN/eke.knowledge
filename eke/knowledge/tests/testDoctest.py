@@ -1,20 +1,21 @@
 # encoding: utf-8
-# Copyright 2009 California Institute of Technology. ALL RIGHTS
+# Copyright 2009-2012 California Institute of Technology. ALL RIGHTS
 # RESERVED. U.S. Government Sponsorship acknowledged.
 
 '''
 EDRN Knowledge Environment: functional and documentation tests.
 '''
 
-import unittest, doctest, base
-from zope.component import testing, eventtesting
-from Testing import ZopeTestCase as ztc
+from eke.knowledge.testing import EKE_KNOWLEDGE_FUNCTIONAL_TESTING as LAYER
+from plone.testing import layered
+import doctest
+import unittest2 as unittest
+
+optionFlags = (doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE | doctest.REPORT_ONLY_FIRST_FAILURE)
 
 def test_suite():
 	return unittest.TestSuite([
-		ztc.ZopeDocFileSuite('README.txt', package='eke.knowledge',
-			test_class=base.FunctionalBaseTestCase,
-			optionflags=doctest.REPORT_ONLY_FIRST_FAILURE | doctest.NORMALIZE_WHITESPACE | doctest.ELLIPSIS)
+		layered(doctest.DocFileSuite('README.txt', package='eke.knowledge', optionflags=optionFlags), LAYER),
 	])
 	
 
