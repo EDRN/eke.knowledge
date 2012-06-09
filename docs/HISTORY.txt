@@ -3,6 +3,11 @@ Changelog
 
 What follows is a history of changes from release to release.
 
+1.0.5 — Upgrades
+----------------
+
+Made compatible with Plone 4.1.5.
+
 
 1.0.4 — Test Support
 --------------------
