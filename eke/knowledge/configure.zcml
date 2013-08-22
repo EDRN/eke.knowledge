@@ -11,6 +11,7 @@ RESERVED. U.S. Government Sponsorship acknowledged.
 
     <five:registerPackage package="." initialize=".initialize" />
     <includeDependencies package='.' />
+    <include package='z3c.autoinclude' file='meta.zcml' />
     <include package='.browser'/>
     <include package='.content'/>
     <genericsetup:registerProfile 
