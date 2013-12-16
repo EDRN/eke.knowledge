@@ -30,6 +30,11 @@ class SetupTest(unittest.TestCase):
         '''Ensure fields for URLs are extra wide.'''
         from eke.knowledge.content.knowledgefolder import KnowledgeFolderSchema
         self.failUnless(KnowledgeFolderSchema['rdfDataSource'].widget.size >= 60)
+    def testDiscussion(self):
+        '''Ensure discussion is not allowed (CA-1229)'''
+        types = getToolByName(self.portal, 'portal_types')
+        for i in ('Body System', 'Disease', 'Knowledge Folder', 'Knowledge Object'):
+            self.failIf(types[i].allow_discussion, 'Type "%s" allows discussion but should not' % i)
 
 def test_suite():
     return unittest.defaultTestLoader.loadTestsFromName(__name__)
