@@ -9,7 +9,7 @@ import os.path
 # ------------
 
 _name        = 'eke.knowledge'
-_version     = '1.0.7'
+_version     = '1.0.8'
 _description = 'EDRN Knowledge Environment'
 _url         = 'http://cancer.jpl.nasa.gov/products/eke-knowledge'
 _downloadURL = 'http://oodt.jpl.nasa.gov/dist/eke'
