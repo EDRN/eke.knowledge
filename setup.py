@@ -9,7 +9,7 @@ import os.path
 # ------------
 
 _name        = 'eke.knowledge'
-_version     = '1.0.8'
+_version     = '1.0.9'
 _description = 'EDRN Knowledge Environment'
 _author      = 'Sean Kelly'
 _authorEmail = 'sean.kelly@jpl.nasa.gov'
