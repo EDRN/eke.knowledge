@@ -74,6 +74,5 @@ def ResourceVocabularyFactory(context):
     catalog = getToolByName(context, 'portal_catalog')
     # TODO: filter by review_state?
     results = catalog(portal_type='Knowledge Object', sort_on='sortable_title')
-    items = [(i.Title, i.UID) for i in results]
-    return SimpleVocabulary.fromItems(items)
+    return SimpleVocabulary([SimpleVocabulary.createTerm(i.UID, i.UID, i.Title.decode('utf-8')) for i in results])
 directlyProvides(ResourceVocabularyFactory, IVocabularyFactory)

@@ -4,6 +4,12 @@ Changelog
 What follows is a history of changes from release to release.
 
 
+1.0.9 — TBD
+-----------
+
+• CA-1300
+
+
 1.0.8 — I Had Some Chicken; Pass Me the FLOSS
 ---------------------------------------------
 
