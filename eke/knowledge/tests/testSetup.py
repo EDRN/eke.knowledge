@@ -6,7 +6,7 @@
 EDRN Knowledge Environment: test the setup of this package.
 '''
 
-import unittest2 as unittest
+import unittest
 from eke.knowledge.testing import EKE_KNOWLEDGE_INTEGRATION_TESTING
 from Products.CMFCore.utils import getToolByName
 

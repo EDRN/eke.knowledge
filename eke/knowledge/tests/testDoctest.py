@@ -9,7 +9,7 @@ EDRN Knowledge Environment: functional and documentation tests.
 from eke.knowledge.testing import EKE_KNOWLEDGE_FUNCTIONAL_TESTING as LAYER
 from plone.testing import layered
 import doctest
-import unittest2 as unittest
+import unittest
 
 optionFlags = (doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE | doctest.REPORT_ONLY_FIRST_FAILURE)
 

@@ -5,7 +5,7 @@
 '''EDRN Knowledge Environment: Filter Tests
 '''
 
-import unittest2 as unittest
+import unittest
 from eke.knowledge.testing import EKE_KNOWLEDGE_INTEGRATION_TESTING
 from eke.knowledge.browser.utils import EntityFilterer, MarkupFilterer
 
